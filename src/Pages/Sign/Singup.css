@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*{
+    font: normal normal medium 25px/33px 'Roboto';
+}
+
+
+.Login-link {
+    cursor: pointer;
+}
+
+.Signup-link {
+    position: relative;
+    cursor: pointer;
+} 
+
+.active::after {
+    content: "";
+    position: absolute;
+    background-color: #A03037 !important;
+    height: 5px;
+    width: 22px;
+    border-radius: 4px;
+    bottom: -5px;
+    left: 34%;
+}

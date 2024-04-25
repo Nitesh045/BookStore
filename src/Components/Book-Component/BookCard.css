@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.rating {
+    background-color: #388E3C;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+}
+
+.rating-number {
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+.price {
+    font-size: 12px;
+    font-weight: bold;
+    color: #0A0102;
+}
+
+.discount-price {
+    font-size: 10px;
+    text-decoration:line-through;
+    margin-left: 5px;
+}
