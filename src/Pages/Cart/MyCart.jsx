@@ -4,6 +4,7 @@ import { Grid, Typography,Button,Breadcrumbs } from '@mui/material'
 import Cart from '../../Components/Cart/Cart';
 import CartCustomerDetails from '../../Components/Cart/CartCustomerDetails';
 import CartOrderSummary from '../../Components/Cart/CartOderSummary';
+import QuantityComponent from '../../Components/QualityComp/QualityAdd';
 
 // import { updateUser } from '../../services/userService'
 // import { getCartItems } from '../../services/dataService'
@@ -59,6 +60,7 @@ function MyCart() {
           <>
             <Grid item sx={{my:1}} xs={12} sm={10} md={9} lg={7}>
               <Cart  />
+              
             </Grid>
             <Grid item sx={{my:1}} xs={12} sm={10} md={9} lg={7}>
               <CartCustomerDetails />

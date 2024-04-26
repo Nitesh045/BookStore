@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { TextField, Grid, Button,Link } from '@mui/material'
+import { TextField, Grid, Button } from '@mui/material'
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -9,8 +9,9 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './Login.css'
+import { Link } from 'react-router-dom';
 
-export const Login = () => {
+export const Login = ({changePage}) => {
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -41,7 +42,7 @@ export const Login = () => {
             </Link>
         </Grid>
         <Grid item  className='Signup-link'>
-            <Link  to={window.location.href.includes('admin-login') ? '/admin-signup' : '/signup'} style={{textDecoration:'none',fontSize: '25px', color: '#0A0102',fontWeight:'bold'}}>         
+            <Link style={{textDecoration:'none',fontSize: '25px', color: '#0A0102',fontWeight:'bold'}} onClick={()=>changePage(prev=>!prev)}>         
                 SIGNUP
             </Link>
         </Grid>

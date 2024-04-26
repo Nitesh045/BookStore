@@ -4,6 +4,7 @@ import Book from '../../Images/Book.png'
 
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import QuantityComponent from '../QualityComp/QualityAdd';
 
 function CartItem() {
     // console.log('cartItem',data)
@@ -29,8 +30,10 @@ function CartItem() {
                 
                  
                     <Grid item sx={{display:'flex',alignItems:'center',marginTop:1,flexWrap:'nowrap'}}>
+                        <QuantityComponent/>
                         
                         <Typography  variant="body1" color="initial" sx={{mx:{xs:1,sm:2},cursor:'pointer'}} >Remove</Typography>
+                        
                     </Grid>
                  
                 
