@@ -11,13 +11,16 @@ import CartOrderSummary from './Components/Cart/CartOderSummary';
 import MyWishlist from './Pages/Wishlist/Wishlist';
 import Success from './Pages/Successful/Success';
 import MyOrder from './Pages/MyOrder/MyOrder';
+import MyCart from './Pages/Cart/MyCart';
+import Header from './Components/Header/Header';
+import { Router } from './router/Router';
 
 
 
 function App() {
   return (
     <div className="App">
-  <MyOrder/>
+      <Router />
     </div>
   );
 }

@@ -80,15 +80,15 @@ function Home() {
         </Grid>
         <Grid item sx={{display:'flex',width:'80%',flexDirection:'column',alignItems:'center'}}>
           <Grid container sx={{gap:3,flexWrap:'wrap',justifyContent:'center'}}>
-            {/* {currentBooks.map((item,index) => (
-              <Link to={location.includes('admin')?`/admin/book-details/${item._id}`:`/book-details/${item._id}`} style={{ textDecoration: 'none' }} key={item._id}> */}
+             {/* {currentBooks.map((item,index) => ( */}
+              <Link to='/about'>
                 <Grid item>
                    
                     <BookCard />
             
                 </Grid>
-              {/* </Link>
-            ))} */}
+               </Link>
+            {/* ))}  */}
           </Grid>
           <Pagination
             count={Math.ceil(data.length / booksPerPage)} 
