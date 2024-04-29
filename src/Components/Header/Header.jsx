@@ -19,6 +19,9 @@ import { ReactComponent as Education } from "../../Images/education.svg";
 import "./Header.css";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { Link } from "react-router-dom";
+import { FavoriteBorderOutlined, MarkunreadMailboxOutlined } from "@mui/icons-material";
+import { Button } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,6 +65,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+const StyledMenuLink = styled(Link)(({ theme }) => ({
+  textDecoration: "none",
+  color: "#878787",
+}));
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  fontSize: 12,
+  "&:hover": { color: "#A03037", backgroundColor: "lightcoral" },
+}));
+
+ const StyledLogoutBtn = styled(Button)(({ theme }) => ({
+  textTransform: 'none',
+  margin: '10px',
+  width: 120,
+  borderColor: '#A03037',
+  color: '#A03037',
+  '&:hover': { color: '#A03037', borderColor: '#A03037' }
+}))
+
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -126,38 +147,41 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <Search  className="SearchExternal">
+        <SearchIconWrapper>
+          <SearchIcon sx={{ color: "#9D9D9D" }} />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ "aria-label": "search..." }}
+          sx={{ color: "#9D9D9D" }}
+        />
+      </Search>
+      <StyledMenuLink>
+        <StyledMenuItem>
+          <PersonOutlineOutlinedIcon /> Profile
+        </StyledMenuItem>
+      </StyledMenuLink>
+      <StyledMenuLink to="/myorder">
+        <StyledMenuItem>
+          <MarkunreadMailboxOutlined />
+          My Orders
+        </StyledMenuItem>
+      </StyledMenuLink>
+      <StyledMenuLink to="/wishlist">
+        <StyledMenuItem>
+          <FavoriteBorderOutlined />
+          My Wishlist
+        </StyledMenuItem>
+      </StyledMenuLink>
+      <StyledMenuLink to="/cart">
+        <StyledMenuItem>
+          <ShoppingCartOutlinedIcon /> Cart
+        </StyledMenuItem>
+      </StyledMenuLink>
+      <StyledLogoutBtn variant="outlined" >
+        Logout
+      </StyledLogoutBtn>
     </Menu>
   );
 
@@ -227,9 +251,10 @@ export default function Header() {
             color="inherit"
             onClick={handleProfileMenuOpen}
           >
-            <Badge badgeContent={4} color="error">
+            
               <PersonOutlineOutlinedIcon />
-            </Badge>
+             
+            
           </IconButton>
 
           <IconButton
@@ -240,7 +265,9 @@ export default function Header() {
             aria-haspopup="true"
             color="inherit"
           >
-            <ShoppingCartOutlinedIcon />
+            <Badge badgeContent={4} color="error">
+              <ShoppingCartOutlinedIcon />
+            </Badge>
           </IconButton>
         </Box>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -252,7 +279,7 @@ export default function Header() {
             onClick={handleMobileMenuOpen}
             color="inherit"
           >
-            <PersonOutlineOutlinedIcon />
+            <MoreIcon/>
           </IconButton>
         </Box>
       </AppBar>

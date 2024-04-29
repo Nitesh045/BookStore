@@ -13,7 +13,7 @@ import {
     FormControl,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Book from '../../Images/Book.png';
 import { AccountCircleOutlined, FavoriteBorderOutlined, FavoriteOutlined, Star, StarOutline } from "@mui/icons-material";
 
@@ -21,6 +21,12 @@ import { AccountCircleOutlined, FavoriteBorderOutlined, FavoriteOutlined, Star, 
 // import { deleteProduct } from "../../services/adminDataService";
 
 function BookDetails() {
+    const navigate = useNavigate();
+    const addToWishList =  () => {
+       navigate('/wishlist')
+      };
+
+
     const [bookIndex, setBookIndex] = useState(1);
     let rating = 4
     return (
@@ -72,7 +78,7 @@ function BookDetails() {
                                 backgroundColor: "#333333",
                                 "&:hover": { backgroundColor: "#333333" },
                             }}
-
+                         onClick={addToWishList}
 
                         >
                             <FavoriteOutlined style={{ fontSize: 17, margin: "0px 4px", color: 'white' }} />

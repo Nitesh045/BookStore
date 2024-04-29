@@ -1,13 +1,14 @@
 import { Grid, Typography, Button } from '@mui/material'
 import React from 'react'
 import Book from '../../Images/Book.png'
+import OderSucess from '../../Images/ordersuccess.png'
 
 
 function Success() {
   return (
     <Grid container sx={{flexDirection:'column',alignItems:'center',m:2}}>
         <Grid item>
-            <img src={Book } alt='order-success' height={'200px'}/>
+            <img src={OderSucess } alt='order-success' height={'200px'}/>
         </Grid>
         <Grid item>
             <Typography variant="body1" color="initial" sx={{textAlign:'center',fontSize:18}} component='div'>

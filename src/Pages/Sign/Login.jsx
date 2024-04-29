@@ -37,12 +37,12 @@ export const Login = ({changePage}) => {
     <Grid container sx={{ justifyContent: 'center', gap: 2, flexDirection: 'column', alignItems: 'center',py:2}}>
     <Grid container sx={{ justifyContent: 'center', gap: 12 }}>
         <Grid item className='Login-link active'> 
-            <Link sx={{ fontSize: '25px', color: '#0A0102',fontWeight:'bold',textDecoration:'none'}} >
+            <Link sx={{ textDecoration:'none'}} style={{textDecoration:'none',fontSize: '25px', color: '#0A0102',fontWeight:'bold'}} >
                 LOGIN
             </Link>
         </Grid>
         <Grid item  className='Signup-link'>
-            <Link style={{textDecoration:'none',fontSize: '25px', color: '#0A0102',fontWeight:'bold'}} onClick={()=>changePage(prev=>!prev)}>         
+            <Link style={{textDecoration:'none',fontSize: '25px', color: '#878787',fontWeight:'bold'}} onClick={()=>changePage(prev=>!prev)}>         
                 SIGNUP
             </Link>
         </Grid>

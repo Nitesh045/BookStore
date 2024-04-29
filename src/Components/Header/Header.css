@@ -1,4 +1,11 @@
 body{
     margin: 0px !important;
     
+    
+}
+
+@media(max-width:650px){
+    .css-0{
+       visibility: hidden !important;
+    }
 }

@@ -2,6 +2,7 @@
 
 * {
     font-family: 'Roboto', sans-serif;
+    text-decoration: none;
 }
 
 .rating {
@@ -28,3 +29,4 @@
     text-decoration:line-through;
     margin-left: 5px;
 }
+

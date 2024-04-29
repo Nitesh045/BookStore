@@ -6,7 +6,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import './Login.css';
+
+import './Singup.css'
 
 
 
@@ -85,7 +86,7 @@ function Signup({changePage}) {
         <Grid container sx={{ justifyContent: 'center', gap: 2, flexDirection: 'column', alignItems: 'center',py:2}}>
             <Grid container sx={{ justifyContent: 'center', gap: 12 }}>
                 <Grid item onClick={()=> {changePage(false)}} className='Login-link'> 
-                    <Link  to={window.location.href.includes('admin-signup') ? '/admin-login' : '/signin'} sx={{textDecoration:'none', fontSize: '25px', color: '#878787',fontWeight:'bold'}}>                
+                    <Link   sx={{textDecoration:'none', fontSize: '25px', color: '#878787',fontWeight:'bold'}}>                
                         LOGIN
                     </Link>
                 </Grid>
