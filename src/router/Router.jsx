@@ -9,13 +9,15 @@ const BookDetails = lazy(() =>
 const MyCart = lazy(() => import("../Pages/Cart/MyCart"));
 const MyWishlist = lazy(() => import("../Pages/Wishlist/Wishlist"));
 const MyOrder = lazy(() => import("../Pages/MyOrder/MyOrder"));
-const  Login  =lazy(()=>import("../Pages/Sign/Login")) ;
-const SignCombined =lazy(()=>import("../Pages/Sign/CombinePage")) ;
+const Login = lazy(() => import("../Pages/Sign/Login"));
+const SignCombined = lazy(() => import("../Pages/Sign/CombinePage"));
 
-const Success =lazy(()=>import("../Pages/Successful/Success")) ;
-const CartOrderSummary =lazy(()=>import("../Components/Cart/CartOderSummary")) ;
-const ProtectedRoute =lazy(()=>import("./ProtectedRoute")) ;
-const AuthRoute =lazy(()=>import("./AuthRoute")) ;
+const Success = lazy(() => import("../Pages/Successful/Success"));
+const CartOrderSummary = lazy(() =>
+  import("../Components/Cart/CartOderSummary")
+);
+const ProtectedRoute = lazy(() => import("./ProtectedRoute"));
+const AuthRoute = lazy(() => import("./AuthRoute"));
 
 export const Router = () => {
   return (
@@ -26,11 +28,11 @@ export const Router = () => {
           element={
             <Suspense>
               <ProtectedRoute>
-              <>
-                <Header />
-                <Home />
-              </>
-            </ProtectedRoute>
+                <>
+                  <Header />
+                  <Home />
+                </>
+              </ProtectedRoute>
             </Suspense>
           }
         />
@@ -39,11 +41,11 @@ export const Router = () => {
           element={
             <Suspense>
               <ProtectedRoute>
-              <>
-                <Header />
-                <BookDetails />
-              </>
-            </ProtectedRoute>
+                <>
+                  <Header />
+                  <BookDetails />
+                </>
+              </ProtectedRoute>
             </Suspense>
           }
         />
@@ -52,25 +54,25 @@ export const Router = () => {
           element={
             <Suspense>
               <ProtectedRoute>
-              <>
-                <Header />
-                <MyCart />
-              </>
-            </ProtectedRoute>
+                <>
+                  <Header />
+                  <MyCart />
+                </>
+              </ProtectedRoute>
             </Suspense>
           }
         />
         <Route
           path="/wishlist"
           element={
-           <Suspense>
-             <ProtectedRoute>
-              <>
-                <Header />
-                <MyWishlist />
-              </>
-            </ProtectedRoute>
-           </Suspense>
+            <Suspense>
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <MyWishlist />
+                </>
+              </ProtectedRoute>
+            </Suspense>
           }
         />
         <Route
@@ -78,20 +80,22 @@ export const Router = () => {
           element={
             <Suspense>
               <ProtectedRoute>
-              <>
-                <Header />
-                <MyOrder />
-              </>
-            </ProtectedRoute>
+                <>
+                  <Header />
+                  <MyOrder />
+                </>
+              </ProtectedRoute>
             </Suspense>
           }
         />
         <Route
           path="/login"
           element={
-            <AuthRoute>
-              <SignCombined />
-            </AuthRoute>
+            <Suspense>
+              <AuthRoute>
+                <SignCombined />
+              </AuthRoute>
+            </Suspense>
           }
         />
         <Route
@@ -99,8 +103,8 @@ export const Router = () => {
           element={
             <Suspense>
               <AuthRoute>
-              <SignCombined />
-            </AuthRoute>
+                <SignCombined />
+              </AuthRoute>
             </Suspense>
           }
         />
@@ -109,8 +113,8 @@ export const Router = () => {
           element={
             <Suspense>
               <AuthRoute>
-              <SignCombined />
-            </AuthRoute>
+                <SignCombined />
+              </AuthRoute>
             </Suspense>
           }
         />
@@ -119,22 +123,22 @@ export const Router = () => {
           element={
             <Suspense>
               <ProtectedRoute>
-              <Success />
-            </ProtectedRoute>
+                <Success />
+              </ProtectedRoute>
             </Suspense>
           }
         />
         <Route
           path="/cartordersummary"
           element={
-           <Suspense>
-             <ProtectedRoute>
-              <>
-                <Header />
-                <CartOrderSummary />
-              </>
-            </ProtectedRoute>
-           </Suspense>
+            <Suspense>
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <CartOrderSummary />
+                </>
+              </ProtectedRoute>
+            </Suspense>
           }
         />
       </Routes>
