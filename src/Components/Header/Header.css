@@ -9,3 +9,16 @@ body{
        visibility: hidden !important;
     }
 }
+#profile-btn {
+    position: relative;
+}
+
+.profile-btn::after{
+    position: absolute;
+    content: "";
+    height: 5px;
+    background-color: white;
+    bottom: 0;
+    width: 90%;
+    border-radius: 3px;
+}

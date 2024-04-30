@@ -14,14 +14,16 @@ import MyOrder from './Pages/MyOrder/MyOrder';
 import MyCart from './Pages/Cart/MyCart';
 import Header from './Components/Header/Header';
 import { Router } from './router/Router';
+import { Provider } from 'react-redux';
+import store from './Components/Redux/Store';
 
 
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
       <Router />
-    </div>
+    </Provider>
   );
 }
 

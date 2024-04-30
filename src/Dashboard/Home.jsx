@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Typography,Box } from '@mui/material'
 
 import FormControl from '@mui/material/FormControl';
@@ -6,33 +6,37 @@ import Pagination from '@mui/material/Pagination'
 import { Link } from 'react-router-dom';
 
 import BookCard from '../Components/Book-Component/BookCard';
+import { getBooks } from '../Services/DataServices';
 
 
 function Home() {
-  
+  const [data,setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
- 
+  const [filter,setFilter] = useState('relevance');
+  const [loading,setLoading] = useState(true);
   const booksPerPage = 8;
   
-  let assumingBooks=[
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-    {name:'nitesh'},
-  ]
-
+  useEffect(() => {
+    getAllBooks()
+  }, [])
+  const getAllBooks = async() => {
+    let response = await getBooks();
+    let bookData = response.data.result;
+    // console.log(response);
+    if(filter === 'low') {
+      setData(bookData.sort((a,b) => a.discountPrice - b.discountPrice))
+    } else if (filter === 'high') {
+      setData(bookData.sort((a,b) => a.discountPrice + b.discountPrice))
+    } else if (filter === 'new') {
+      setData(bookData.sort((a,b) => a.createdAt - b.createdAt))
+    } else {
+      setData(response.data.result)
+    }
+  }
+console.log(data)
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks = assumingBooks.slice(indexOfFirstBook, indexOfLastBook);
+  const currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
  
   const handleChangePage = (event,page) => {
     setCurrentPage(page);
@@ -52,7 +56,7 @@ function Home() {
           <Typography variant="body1" color="initial" component={'div'} sx={{fontSize:25,display:'flex',alignItems:'center'}}>
             Books
             <Typography variant="body1" color="initial" sx={{fontSize:12,color:'#9D9D9D'}}>
-              ({assumingBooks.length})
+              ({data.length})
             </Typography>
           </Typography>
           <Box sx={{flex:'0 1 80%'}}/>
@@ -68,18 +72,18 @@ function Home() {
         </Grid>
         <Grid item sx={{display:'flex',width:'100%',flexDirection:'column',alignItems:'center'}}>
           <Grid container sx={{gap:3,flexWrap:'wrap',justifyContent:'center'}}>
-              {currentBooks.map((index) => ( 
-              <Link to='/about'>
+              {currentBooks.map((item,index) => ( 
+              <Link to={`/about/${item._id}`} key={item._id}>
                 <Grid item>
                    
-                    <BookCard key={index} />
+                    <BookCard index={index} item={item} />
             
                 </Grid>
                </Link>
              ))}  
           </Grid>
           <Pagination
-            count={Math.ceil(assumingBooks.length / booksPerPage)} 
+            count={Math.ceil(data.length / booksPerPage)} 
             page={currentPage}
             variant="outlined"
             shape="rounded"

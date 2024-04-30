@@ -19,9 +19,15 @@ import { ReactComponent as Education } from "../../Images/education.svg";
 import "./Header.css";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { Link } from "react-router-dom";
-import { FavoriteBorderOutlined, MarkunreadMailboxOutlined } from "@mui/icons-material";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  FavoriteBorderOutlined,
+  MarkunreadMailboxOutlined,
+  SupervisorAccountOutlined,
+} from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "../../Services/DataServices";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -73,24 +79,47 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   fontSize: 12,
   "&:hover": { color: "#A03037", backgroundColor: "lightcoral" },
 }));
+const StyledButton = styled(Button)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  backgroundColor: "#A03037",
+  textTransform: "none",
+  "&:hover": {
+    backgroundColor: "transparent",
+    textDecoration: "none",
+  },
+}));
 
- const StyledLogoutBtn = styled(Button)(({ theme }) => ({
-  textTransform: 'none',
-  margin: '10px',
+const StyledLogoutBtn = styled(Button)(({ theme }) => ({
+  textTransform: "none",
+  margin: "10px",
   width: 120,
-  borderColor: '#A03037',
-  color: '#A03037',
-  '&:hover': { color: '#A03037', borderColor: '#A03037' }
-}))
+  borderColor: "#A03037",
+  color: "#A03037",
+  "&:hover": { color: "#A03037", borderColor: "#A03037" },
+}));
 
-
-export default function Header() {
+function Header({ cart, cartLength }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const [anchorElProfile, setAnchorElProfile] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const [active, setActive] = React.useState(false);
+  const open = Boolean(anchorElProfile);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleClick = (event) => {
+    setAnchorElProfile(event.currentTarget);
+    // document.getElementById("profile-btn").classList.remove("active");
+    setActive(true);
+  };
+  const handleClose = () => {
+    setAnchorElProfile(null);
+    setActive(false);
+    // document.getElementById("profile-btn").classList.add("active");
+  };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -147,7 +176,7 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <Search  className="SearchExternal">
+      <Search className="SearchExternal">
         <SearchIconWrapper>
           <SearchIcon sx={{ color: "#9D9D9D" }} />
         </SearchIconWrapper>
@@ -179,12 +208,27 @@ export default function Header() {
           <ShoppingCartOutlinedIcon /> Cart
         </StyledMenuItem>
       </StyledMenuLink>
-      <StyledLogoutBtn variant="outlined" >
-        Logout
-      </StyledLogoutBtn>
+      <StyledLogoutBtn variant="outlined">Logout</StyledLogoutBtn>
     </Menu>
   );
 
+  React.useEffect(() => {
+    getCart();
+  },[]);
+  const cartLengths = useSelector((state) => state.CartReducer.cartLength);
+  const memoCartLength = React.useMemo(() => {
+    return cartLengths;
+  }, [cartLengths]);
+
+  async function getCart() {
+    let response = await getCartItems();
+    dispatch({ type: "GET_CART_ITEMS", payload: response.data.result });
+  }
+  const onLogout = () => {
+    localStorage.clear();
+    // if(location.includes())
+    navigate("/login");
+  };
   return (
     <Box sx={{ width: "100%", margin: "0px", top: "0%", left: "0px" }}>
       <AppBar
@@ -245,30 +289,95 @@ export default function Header() {
         </div>
 
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-            onClick={handleProfileMenuOpen}
-          >
-            
-              <PersonOutlineOutlinedIcon />
-             
-            
-          </IconButton>
-
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
+          <StyledButton
+            variant="contained"
+            id="profile-btn"
+            aria-controls={open ? "basic-menu" : undefined}
             aria-haspopup="true"
-            color="inherit"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            className={active ? "profile-btn" : ""}
+            sx={{ px: 3 }}
           >
-            <Badge badgeContent={4} color="error">
-              <ShoppingCartOutlinedIcon />
-            </Badge>
-          </IconButton>
+            <PersonOutlineOutlinedIcon />
+            Nitesh
+          </StyledButton>
+          <Menu
+            id="profile-btn-menu"
+            anchorEl={anchorElProfile}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+              style: {
+                width: 160,
+                paddingLeft: 10,
+              },
+            }}
+          >
+            <Typography variant="body1" color="initial">
+              Hello Poonam,
+            </Typography>
+            <StyledMenuLink to="/profile">
+              <StyledMenuItem>
+                <PersonOutlineOutlinedIcon
+                  fontSize="sm"
+                  style={{ marginRight: 10 }}
+                />
+                Profile
+              </StyledMenuItem>
+            </StyledMenuLink>
+            {!window.location.href.includes("admin") && (
+              <div>
+                <StyledMenuLink to="/myorder">
+                  <StyledMenuItem>
+                    <MarkunreadMailboxOutlined
+                      fontSize="sm"
+                      style={{ marginRight: 10 }}
+                    />
+                    My Orders
+                  </StyledMenuItem>
+                </StyledMenuLink>
+                <StyledMenuLink to="/wishlist">
+                  <StyledMenuItem>
+                    <FavoriteBorderOutlined
+                      fontSize="sm"
+                      style={{ marginRight: 10 }}
+                    />
+                    My Wishlist
+                  </StyledMenuItem>
+                </StyledMenuLink>
+              </div>
+            )}
+            <StyledMenuLink
+              to={
+                location.pathname.includes("admin") ? "/signin" : "/admin-login"
+              }
+            >
+              <StyledMenuItem>
+                {location.pathname.includes("admin") ? (
+                  <AccountCircle fontSize="sm" style={{ marginRight: 10 }} />
+                ) : (
+                  <SupervisorAccountOutlined
+                    fontSize="sm"
+                    style={{ marginRight: 10 }}
+                  />
+                )}
+                {location.pathname.includes("admin") ? "User" : "Admin"}
+              </StyledMenuItem>
+            </StyledMenuLink>
+            <StyledLogoutBtn variant="outlined" onClick={onLogout}>
+              Logout
+            </StyledLogoutBtn>
+          </Menu>
+          <StyledMenuLink to="/cart">
+            <StyledButton variant="contained" sx={{ px: 4 }}>
+              <Badge badgeContent={memoCartLength} color="primary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
+              Cart
+            </StyledButton>
+          </StyledMenuLink>
         </Box>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton
@@ -279,7 +388,7 @@ export default function Header() {
             onClick={handleMobileMenuOpen}
             color="inherit"
           >
-            <MoreIcon/>
+            <MoreIcon />
           </IconButton>
         </Box>
       </AppBar>
@@ -288,3 +397,8 @@ export default function Header() {
     </Box>
   );
 }
+const mapStateToProps = (state) => ({
+  cart: state.CartReducer.cart,
+  cartLength: state.CartReducer.cartLength,
+});
+export default connect(mapStateToProps)(Header);

@@ -9,9 +9,13 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './Login.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { userLogin } from '../../Services/UserService';
 
 export const Login = ({changePage}) => {
+    const navigate = useNavigate();
+    const emailRegex = /^[a-z]{3,}(.[0-9a-z]*)?@([a-z]){2,}.[a-z]+(.in)*$/;
+    const passwordRegex = /^.*(?=.{8,})(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*$/;
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -33,6 +37,33 @@ export const Login = ({changePage}) => {
             [e.target.id]: e.target.value 
         })
     }
+const onLogin= async()=>{
+    let emailTest = emailRegex.test(data.email);
+        let passwordTest = passwordRegex.test(data.password);
+        if(emailTest === false) {
+            setCheckError({
+                EmailTrue: true,
+                EmailError: 'Please Enter valid Email'
+            })
+        } else if(passwordTest === false) {
+            setCheckError({
+                PasswordTrue: true,
+                PasswordError: 'Incorrect Password'
+            })
+        }
+        if(emailTest === true && passwordTest === true) {
+            
+                let response = await userLogin(data)
+                console.log(response)
+                localStorage.setItem('token',response.data.result.accessToken)
+                navigate('/')
+            
+         } else { 
+                console.log("something wrong")
+            }
+        
+}
+    
   return (
     <Grid container sx={{ justifyContent: 'center', gap: 2, flexDirection: 'column', alignItems: 'center',py:2}}>
     <Grid container sx={{ justifyContent: 'center', gap: 12 }}>
@@ -104,7 +135,7 @@ export const Login = ({changePage}) => {
         </FormControl>
     </Grid>
     <Grid item>
-        <Button type='submit' variant='contained' sx={{ width: '252px', backgroundColor: '#A03037' }} >
+        <Button type='submit' variant='contained' sx={{ width: '252px', backgroundColor: '#A03037' }} onClick={onLogin} >
             Login
         </Button>
     </Grid>

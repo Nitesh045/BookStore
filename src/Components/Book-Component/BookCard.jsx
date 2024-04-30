@@ -9,7 +9,8 @@ import './BookCard.css';
 import StarIcon from '@mui/icons-material/Star';
 
 
-function BookCard({item}) {
+function BookCard({item,index}) {
+    console.log(index)
 
    
     return (
@@ -26,12 +27,12 @@ function BookCard({item}) {
             </CardContent>
             <CardContent>
                 <Typography gutterBottom variant="span" component="div" sx={{fontSize:'14px'}}>
-                    {/* {item.bookName} */}
-                    Nitesh
+                   
+                    {item.bookName}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{fontSize:'10px'}}>
-                    {/* {item.author} */}
-                    Nitesh
+                   
+                    {item.author}
                 </Typography>
                 <Typography variant="span" color="text.secondary" component="div" sx={{display:'flex',alignItems:'flex-start',my:1}}>
                     <span className='rating'>
@@ -44,11 +45,11 @@ function BookCard({item}) {
                 </Typography>
                 <Typography variant="span" color="text.secondary" component="div" sx={{display:'flex',alignItems:'flex-start',my:1}}>
                     <span className='price'>
-                       {/* Rs. {item.discountPrice} */}
-                       1400
+                       Rs. {item.discountPrice}
+                      
                     </span>
                     <span className='discount-price'>
-                        {/* Rs. {item.price} */}
+                        Rs. {item.price}
                         2000
                     </span>
                 </Typography>

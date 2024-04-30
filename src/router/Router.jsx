@@ -1,17 +1,22 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "../Dashboard/Home";
-import Header from "../Components/Header/Header";
-import BookDetails from "../Components/Book-Details/BookDetails";
-import Cart from "../Components/Cart/Cart";
-import MyCart from "../Pages/Cart/MyCart";
-import MyWishlist from "../Pages/Wishlist/Wishlist";
-import MyOrder from "../Pages/MyOrder/MyOrder";
-import { Login } from "../Pages/Sign/Login";
-import SignCombined from "../Pages/Sign/CombinePage";
-import Signup from "../Pages/Sign/SingUp";
-import Success from "../Pages/Successful/Success";
-import CartOrderSummary from "../Components/Cart/CartOderSummary";
+const Home = lazy(() => import("../Dashboard/Home"));
+const Header = lazy(() => import("../Components/Header/Header"));
+const BookDetails = lazy(() =>
+  import("../Components/Book-Details/BookDetails")
+);
+
+const MyCart = lazy(() => import("../Pages/Cart/MyCart"));
+const MyWishlist = lazy(() => import("../Pages/Wishlist/Wishlist"));
+const MyOrder = lazy(() => import("../Pages/MyOrder/MyOrder"));
+const  Login  =lazy(()=>import("../Pages/Sign/Login")) ;
+const SignCombined =lazy(()=>import("../Pages/Sign/CombinePage")) ;
+
+const Success =lazy(()=>import("../Pages/Successful/Success")) ;
+const CartOrderSummary =lazy(()=>import("../Components/Cart/CartOderSummary")) ;
+const ProtectedRoute =lazy(()=>import("./ProtectedRoute")) ;
+const AuthRoute =lazy(()=>import("./AuthRoute")) ;
+
 export const Router = () => {
   return (
     <BrowserRouter>
@@ -19,53 +24,119 @@ export const Router = () => {
         <Route
           path="/"
           element={
-            <>
-              <Header />
-              <Home />
-            </>
+            <Suspense>
+              <ProtectedRoute>
+              <>
+                <Header />
+                <Home />
+              </>
+            </ProtectedRoute>
+            </Suspense>
           }
         />
         <Route
-          path="/about"
+          path="/about/:id"
           element={
-            <>
-              <Header />
-              <BookDetails />
-            </>
+            <Suspense>
+              <ProtectedRoute>
+              <>
+                <Header />
+                <BookDetails />
+              </>
+            </ProtectedRoute>
+            </Suspense>
           }
         />
         <Route
           path="/cart"
           element={
-            <>
-              <Header />
-              <MyCart />
-            </>
+            <Suspense>
+              <ProtectedRoute>
+              <>
+                <Header />
+                <MyCart />
+              </>
+            </ProtectedRoute>
+            </Suspense>
           }
         />
         <Route
           path="/wishlist"
           element={
-            <>
-              <Header />
-              <MyWishlist />
-            </>
+           <Suspense>
+             <ProtectedRoute>
+              <>
+                <Header />
+                <MyWishlist />
+              </>
+            </ProtectedRoute>
+           </Suspense>
           }
         />
         <Route
           path="/myorder"
           element={
-            <>
-              <Header />
-              <MyOrder />
-            </>
+            <Suspense>
+              <ProtectedRoute>
+              <>
+                <Header />
+                <MyOrder />
+              </>
+            </ProtectedRoute>
+            </Suspense>
           }
         />
-        <Route path="/login" element={<SignCombined />} />
-        <Route path="/loginSingup" element={<SignCombined />} />
-        <Route path="/singup" element={<SignCombined />} />
-        <Route path="/success" element={<Success />} />
-        <Route path="/cartordersummary" element={<><Header/><CartOrderSummary/></>}/>
+        <Route
+          path="/login"
+          element={
+            <AuthRoute>
+              <SignCombined />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/loginSingup"
+          element={
+            <Suspense>
+              <AuthRoute>
+              <SignCombined />
+            </AuthRoute>
+            </Suspense>
+          }
+        />
+        <Route
+          path="/singup"
+          element={
+            <Suspense>
+              <AuthRoute>
+              <SignCombined />
+            </AuthRoute>
+            </Suspense>
+          }
+        />
+        <Route
+          path="/success"
+          element={
+            <Suspense>
+              <ProtectedRoute>
+              <Success />
+            </ProtectedRoute>
+            </Suspense>
+          }
+        />
+        <Route
+          path="/cartordersummary"
+          element={
+           <Suspense>
+             <ProtectedRoute>
+              <>
+                <Header />
+                <CartOrderSummary />
+              </>
+            </ProtectedRoute>
+           </Suspense>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
