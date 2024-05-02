@@ -80,6 +80,7 @@ import QuantityComponent from "../QualityComp/QualityAdd";
           item._id === id ? setBookIndex(index+1) : setBookIndex(1);
           return item._id === id;
         });
+        console.log(filteredData)
         setBook(filteredData);
       } catch (err) {
         console.log(err);

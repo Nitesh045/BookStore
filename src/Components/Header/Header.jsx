@@ -28,6 +28,7 @@ import {
 import { Button } from "@mui/material";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getCartItems } from "../../Services/DataServices";
+import { type } from "@testing-library/user-event/dist/type";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -82,8 +83,9 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 const StyledButton = styled(Button)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  backgroundColor: "#A03037",
+  backgroundColor: 'maroon',
   textTransform: "none",
+  
   "&:hover": {
     backgroundColor: "transparent",
     textDecoration: "none",
@@ -100,6 +102,8 @@ const StyledLogoutBtn = styled(Button)(({ theme }) => ({
 }));
 
 function Header({ cart, cartLength }) {
+
+  const[inputValue,SetInputValue]=React.useState('')
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [anchorElProfile, setAnchorElProfile] = React.useState(null);
@@ -136,6 +140,15 @@ function Header({ cart, cartLength }) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+
+  const handleInputChange=(e)=>{
+      SetInputValue(e.target.value)
+     const query = e.target.value;
+    dispatch({ type: "SET_SEARCH_QUERY", payload: query });
+    
+  }
+  
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -258,10 +271,11 @@ function Header({ cart, cartLength }) {
               alignItems: "center",
               color: "white",
               textAlign: "center",
+              
             }}
           >
             <Education />
-            BookStore
+           <span style={{marginLeft:'5px'}}>BookStore</span>
           </Typography>
 
           <Box>
@@ -283,14 +297,17 @@ function Header({ cart, cartLength }) {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                onChange={handleInputChange}
+                value={inputValue}
               />
             </Search>
           </Box>
         </div>
 
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <StyledButton
-            variant="contained"
+         <StyledMenuLink>
+         <StyledButton
+            
             id="profile-btn"
             aria-controls={open ? "basic-menu" : undefined}
             aria-haspopup="true"
@@ -298,10 +315,12 @@ function Header({ cart, cartLength }) {
             onClick={handleClick}
             className={active ? "profile-btn" : ""}
             sx={{ px: 3 }}
+            variant="contained" 
           >
             <PersonOutlineOutlinedIcon />
             Nitesh
           </StyledButton>
+         </StyledMenuLink>
           <Menu
             id="profile-btn-menu"
             anchorEl={anchorElProfile}

@@ -10,7 +10,7 @@ import StarIcon from '@mui/icons-material/Star';
 
 
 function BookCard({item,index}) {
-    console.log(index)
+    
 
    
     return (
@@ -50,7 +50,7 @@ function BookCard({item,index}) {
                     </span>
                     <span className='discount-price'>
                         Rs. {item.price}
-                        2000
+                       
                     </span>
                 </Typography>
             </CardContent>

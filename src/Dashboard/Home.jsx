@@ -7,14 +7,20 @@ import { Link } from 'react-router-dom';
 
 import BookCard from '../Components/Book-Component/BookCard';
 import { getBooks } from '../Services/DataServices';
+import { connect, useSelector } from 'react-redux';
 
 
-function Home() {
+function Home({searchQuery}) {
   const [data,setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filter,setFilter] = useState('relevance');
   const [loading,setLoading] = useState(true);
   const booksPerPage = 8;
+  const [valueforSerach, setValueSearch] = useState('')
+  const searchValue= useSelector((state)=>state.SearchReducer.searchQuery);
+  useEffect(() => {
+    setValueSearch(searchValue);
+  }, [searchValue]);
   
   useEffect(() => {
     getAllBooks()
@@ -33,7 +39,9 @@ function Home() {
       setData(response.data.result)
     }
   }
-console.log(data)
+
+  
+
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
@@ -43,10 +51,26 @@ console.log(data)
     
   };
   
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value)
+    
+  }
+  useEffect(() => {
+    // getAllBooks();
+    // console.log('filter',filter)
+      // Set loading to true before fetching data
+    setLoading(true);
+    getAllBooks().then(() => {
+      // Set loading to false after data is fetched
+      setLoading(false);
+    });
+  }, [filter]);
 
-  
-
-  
+  const filteredNotes = currentBooks.filter(book => {
+    
+    // Perform case-insensitive search on note content
+    return book.bookName.toLowerCase().includes(searchValue.toLowerCase());
+  },[]);
 
   return (
     <div>
@@ -61,7 +85,7 @@ console.log(data)
           </Typography>
           <Box sx={{flex:'0 1 80%'}}/>
           <FormControl sx={{ m: 1, minWidth: 200}}>
-            <select style={{padding:5,backgroundColor:'white',border:'1px solid #E2E2E2',textAlign:'center'}}  >
+            <select style={{padding:5,backgroundColor:'white',border:'1px solid #E2E2E2',textAlign:'center'}} onChange={handleFilterChange} value={filter} >
               <option value="relevance">Sort By Relevance</option>
               <option value='low'>Price:Low to High</option>
               <option value='high'>Price:High to Low</option>
@@ -72,7 +96,7 @@ console.log(data)
         </Grid>
         <Grid item sx={{display:'flex',width:'100%',flexDirection:'column',alignItems:'center'}}>
           <Grid container sx={{gap:3,flexWrap:'wrap',justifyContent:'center'}}>
-              {currentBooks.map((item,index) => ( 
+              {filteredNotes.map((item,index) => ( 
               <Link to={`/about/${item._id}`} key={item._id}>
                 <Grid item>
                    
@@ -98,5 +122,9 @@ console.log(data)
     </div>
   )
 }
+const StateToProps = (state) => ({
+  searchQuery: state.SearchReducer.searchQuery
+});
 
-export default Home
+
+export default connect(StateToProps)(Home)
