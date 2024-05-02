@@ -83,9 +83,9 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 const StyledButton = styled(Button)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  backgroundColor: 'maroon',
+  backgroundColor: "maroon",
   textTransform: "none",
-  
+
   "&:hover": {
     backgroundColor: "transparent",
     textDecoration: "none",
@@ -102,8 +102,7 @@ const StyledLogoutBtn = styled(Button)(({ theme }) => ({
 }));
 
 function Header({ cart, cartLength }) {
-
-  const[inputValue,SetInputValue]=React.useState('')
+  const [inputValue, SetInputValue] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [anchorElProfile, setAnchorElProfile] = React.useState(null);
@@ -141,13 +140,33 @@ function Header({ cart, cartLength }) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-
-  const handleInputChange=(e)=>{
-      SetInputValue(e.target.value)
-     const query = e.target.value;
-    dispatch({ type: "SET_SEARCH_QUERY", payload: query });
+  const onLogout = () => {
+    localStorage.clear();
     
+    navigate("/login");
+  };
+  const handleInputChange = (e) => {
+    SetInputValue(e.target.value);
+    const query = e.target.value;
+    dispatch({ type: "SET_SEARCH_QUERY", payload: query });
+  };
+  React.useEffect(() => {
+    getCart();
+  }, []);
+  const cartLengths = useSelector((state) => state.CartReducer.cartLength);
+  const memoCartLength = React.useMemo(() => {
+    return cartLengths;
+  }, [cartLengths]);
+
+  async function getCart() {
+    let response = await getCartItems();
+    dispatch({ type: "GET_CART_ITEMS", payload: response.data.result });
   }
+
+  console.log(inputValue);
+
+  
+
   
 
   const menuId = "primary-search-account-menu";
@@ -197,6 +216,8 @@ function Header({ cart, cartLength }) {
           placeholder="Search…"
           inputProps={{ "aria-label": "search..." }}
           sx={{ color: "#9D9D9D" }}
+          onChange={handleInputChange}
+          value={inputValue}
         />
       </Search>
       <StyledMenuLink>
@@ -218,30 +239,17 @@ function Header({ cart, cartLength }) {
       </StyledMenuLink>
       <StyledMenuLink to="/cart">
         <StyledMenuItem>
-          <ShoppingCartOutlinedIcon /> Cart
+          <Badge badgeContent={memoCartLength} color="primary">
+            <ShoppingCartOutlinedIcon /> Cart
+          </Badge>
         </StyledMenuItem>
       </StyledMenuLink>
-      <StyledLogoutBtn variant="outlined">Logout</StyledLogoutBtn>
+      <StyledLogoutBtn variant="outlined" onClick={onLogout}>
+        Logout
+      </StyledLogoutBtn>
     </Menu>
   );
 
-  React.useEffect(() => {
-    getCart();
-  },[]);
-  const cartLengths = useSelector((state) => state.CartReducer.cartLength);
-  const memoCartLength = React.useMemo(() => {
-    return cartLengths;
-  }, [cartLengths]);
-
-  async function getCart() {
-    let response = await getCartItems();
-    dispatch({ type: "GET_CART_ITEMS", payload: response.data.result });
-  }
-  const onLogout = () => {
-    localStorage.clear();
-    // if(location.includes())
-    navigate("/login");
-  };
   return (
     <Box sx={{ width: "100%", margin: "0px", top: "0%", left: "0px" }}>
       <AppBar
@@ -271,11 +279,10 @@ function Header({ cart, cartLength }) {
               alignItems: "center",
               color: "white",
               textAlign: "center",
-              
             }}
           >
-            <Education/>
-           <span style={{marginLeft:'5px'}}>BookStore</span>
+            <Education />
+            <span style={{ marginLeft: "5px" }}>BookStore</span>
           </Typography>
 
           <Box>
@@ -305,22 +312,21 @@ function Header({ cart, cartLength }) {
         </div>
 
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-         <StyledMenuLink>
-         <StyledButton
-            
-            id="profile-btn"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-            className={active ? "profile-btn" : ""}
-            sx={{ px: 3 }}
-            variant="contained" 
-          >
-            <PersonOutlineOutlinedIcon />
-            Nitesh
-          </StyledButton>
-         </StyledMenuLink>
+          <StyledMenuLink>
+            <StyledButton
+              id="profile-btn"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              className={active ? "profile-btn" : ""}
+              sx={{ px: 3 }}
+              variant="contained"
+            >
+              <PersonOutlineOutlinedIcon />
+              Nitesh
+            </StyledButton>
+          </StyledMenuLink>
           <Menu
             id="profile-btn-menu"
             anchorEl={anchorElProfile}
