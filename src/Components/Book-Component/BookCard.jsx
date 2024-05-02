@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -7,11 +7,28 @@ import { CardActionArea } from '@mui/material';
 import Book from '../../Images/Book.png';
 import './BookCard.css';
 import StarIcon from '@mui/icons-material/Star';
+import am5 from '../../Images/5am.jpg' ;
+import indianStory from '../../Images/The-India-story-book-cover.webp';
+import fear from '../../Images/fearNotStrong.jpg';
+import lordOfRing from '../../Images/LoardofRing1.jpg';
+import IronMan1 from '../../Images/ironManExtream.jpg';
+import spiderMan from '../../Images/spiderman.jpg';
+import gropDiscc from '../../Images/GroupDiscussion.jpg';
+import hobit2 from '../../Images/hobit2.jpg'
+import { connect, useDispatch, useSelector } from 'react-redux';
 
+function BookCard({item,index,StartCounter}) {
+const [counter,setCounter]= useState(0)  
+let imgArr=[am5,indianStory,fear,lordOfRing,IronMan1,spiderMan,gropDiscc,hobit2];
+const dispatch=useDispatch()
 
-function BookCard({item,index}) {
-    
-
+useEffect(()=>{
+    setCounter(counter+1)
+   dispatch({type:'updateCounter', payload:counter })
+},[index])
+console.log(counter);
+const contValue=useSelector(state=>state.CounterReducer.StartCounter)
+console.log(contValue)
    
     return (
         <Card sx={{ minWidth:235,maxWidth: 235}} >
@@ -20,7 +37,7 @@ function BookCard({item,index}) {
                 <CardMedia
                     component="img"
                     height="135px"
-                    src={Book}
+                    src={imgArr[index]}
                     alt="Book"
                     sx={{objectFit:'contain',backgroundColor:'#F5F5F5'}}
                 />
@@ -58,5 +75,6 @@ function BookCard({item,index}) {
         </Card>
     );
 }
+
 
 export default BookCard

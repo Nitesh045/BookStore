@@ -10,6 +10,7 @@ import { getBooks } from '../Services/DataServices';
 import { connect, useSelector } from 'react-redux';
 
 
+
 function Home({searchQuery}) {
   const [data,setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,6 +73,11 @@ function Home({searchQuery}) {
     return book.bookName.toLowerCase().includes(searchValue.toLowerCase());
   },[]);
 
+  
+
+ 
+  
+
   return (
     <div>
       <Grid container sx={{width:'100%',alignItems:'center',justifyContent:'center'}}>
@@ -97,10 +103,12 @@ function Home({searchQuery}) {
         <Grid item sx={{display:'flex',width:'100%',flexDirection:'column',alignItems:'center'}}>
           <Grid container sx={{gap:3,flexWrap:'wrap',justifyContent:'center'}}>
               {filteredNotes.map((item,index) => ( 
+               
               <Link to={`/about/${item._id}`} key={item._id}>
+                 
                 <Grid item>
-                   
-                    <BookCard index={index} item={item} />
+                  
+                    <BookCard index={index} item={item}  />
             
                 </Grid>
                </Link>
