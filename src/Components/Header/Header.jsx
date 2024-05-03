@@ -297,6 +297,7 @@ function Header({ cart, cartLength }) {
                   xl: "800px",
                 },
               }}
+              className="searchInputStyle"
             >
               <SearchIconWrapper>
                 <SearchIcon color="grey" />
