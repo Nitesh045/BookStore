@@ -16,19 +16,48 @@ import spiderMan from '../../Images/spiderman.jpg';
 import gropDiscc from '../../Images/GroupDiscussion.jpg';
 import hobit2 from '../../Images/hobit2.jpg'
 import { connect, useDispatch, useSelector } from 'react-redux';
+import hobbit3 from '../../Images/hobit3.jpg';
+import hobit4 from '../../Images/hobit4.jpg';
+import tablebook from '../../Images/table.jpg';
+import chair from '../../Images/chair.jpg';
+import cheez from '../../Images/cheez.webp';
+import plastictable from '../../Images/plasticbook.jpg';
+import hatCotton from '../../Images/cottonhat.jpg';
+import justThing from '../../Images/just thing.jpg';
 
-function BookCard({item,index,StartCounter}) {
-const [counter,setCounter]= useState(0)  
-let imgArr=[am5,indianStory,fear,lordOfRing,IronMan1,spiderMan,gropDiscc,hobit2];
+
+
+
+
+function BookCard({item,index ,currentPage}) {
+ 
+let imgArr=[am5,indianStory,fear,lordOfRing,IronMan1,spiderMan,gropDiscc,hobit2,hobbit3,hobit4,hobit2,hobbit3,tablebook,chair,cheez,plastictable,hatCotton,justThing];
 const dispatch=useDispatch()
+const [bookIndex, setBookIndex] = useState(0);
 
 useEffect(()=>{
-    setCounter(counter+1)
-   dispatch({type:'updateCounter', payload:counter })
-},[index])
-console.log(counter);
+  if(currentPage==1){
+   setBookIndex(index)
+  }else if(currentPage==2){
+   
+   setBookIndex(index+8)
+  }else if(currentPage==3){
+    
+    setBookIndex(index+16)
+  }else{
+    setBookIndex(index)
+  }
+  
+},[currentPage])
+console.log(bookIndex)
+
+
+
+
+
+ 
 const contValue=useSelector(state=>state.CounterReducer.StartCounter)
-console.log(contValue)
+
    
     return (
         <Card sx={{ minWidth:235,maxWidth: 235}} >
@@ -37,7 +66,7 @@ console.log(contValue)
                 <CardMedia
                     component="img"
                     height="135px"
-                    src={imgArr[index]}
+                    src={imgArr[bookIndex]}
                     alt="Book"
                     sx={{objectFit:'contain',backgroundColor:'#F5F5F5'}}
                 />

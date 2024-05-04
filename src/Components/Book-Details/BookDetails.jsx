@@ -19,6 +19,23 @@ import { connect, useDispatch } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
+import am5 from '../../Images/5am.jpg' ;
+import indianStory from '../../Images/The-India-story-book-cover.webp';
+import fear from '../../Images/fearNotStrong.jpg';
+import lordOfRing from '../../Images/LoardofRing1.jpg';
+import IronMan1 from '../../Images/ironManExtream.jpg';
+import spiderMan from '../../Images/spiderman.jpg';
+import gropDiscc from '../../Images/GroupDiscussion.jpg';
+import hobit2 from '../../Images/hobit2.jpg'
+
+import hobbit3 from '../../Images/hobit3.jpg';
+import hobit4 from '../../Images/hobit4.jpg';
+import tablebook from '../../Images/table.jpg';
+import chair from '../../Images/chair.jpg';
+import cheez from '../../Images/cheez.webp';
+import plastictable from '../../Images/plasticbook.jpg';
+import hatCotton from '../../Images/cottonhat.jpg';
+import justThing from '../../Images/just thing.jpg';
 
 import {
   addCartItem,
@@ -43,7 +60,7 @@ function BookDetails() {
   const [rating, setRating] = useState(0);
   const [cartItem, setCartItem] = useState({});
 
-  
+  let imgArr=[am5,indianStory,fear,lordOfRing,IronMan1,spiderMan,gropDiscc,hobit2,hobbit3,hobit4,hobit2,hobbit3,tablebook,chair,cheez,plastictable,hatCotton,justThing];
 
   let filteredItem;
   let totalRating;
@@ -147,7 +164,7 @@ function BookDetails() {
             component={"div"}
             sx={{ border: "1px solid #D1D1D1", px: 3, py: 2 }}
           >
-            <img src={Book} alt="Book" style={{ height: 367 }} />
+            <img src={imgArr[bookIndex-1]} alt="Book" style={{ height: 367 }} />
           </Typography>
 
           <>

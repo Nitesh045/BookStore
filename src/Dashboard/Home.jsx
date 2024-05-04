@@ -74,8 +74,16 @@ function Home({searchQuery}) {
   },[]);
 
   
+  const [bookIndex, setBookIndex] = useState(1);
+  const [counter,setCounter]= useState(0) 
 
- 
+  useEffect(()=>{
+    while(data.length>20){
+      setCounter(counter=>counter+1)
+    }
+  },[])
+
+  
   
 
   return (
@@ -108,7 +116,7 @@ function Home({searchQuery}) {
                  
                 <Grid item>
                   
-                    <BookCard index={index} item={item}  />
+                    <BookCard index={index} item={item} currentPage={currentPage}   />
             
                 </Grid>
                </Link>
