@@ -43,7 +43,7 @@ function MyCart() {
   return (
     <>
     <Breadcrumbs aria-label="breadcrumb" sx={{mx:'11%',my:2}}>
-      <Link to='/' sx={{textDecoration:'none',color:'#9D9D9D'}}>
+      <Link to='/' style={{textDecoration:'none',color:'#9D9D9D'}}>
           Home
       </Link>
       <Typography color="text.primary">My Cart</Typography>

@@ -82,7 +82,7 @@ export const orderItems = async (data) => {
 
 export const getWishList = async () => {
   let response = await axios.get("https://bookstore.incubation.bridgelabz.com/bookstore_user/get_wishlist_items",headerConfig());
-  // console.log('getWishList',response)
+  //  console.log('getWishList',response)
   return response;
 }
 
