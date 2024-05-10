@@ -93,6 +93,7 @@ const onLogin= async()=>{
                 value={data.email}
                 onChange={handleChange}
                 error={checkError.EmailTrue}
+                placeholder='Email'
             />
             {checkError.EmailTrue && (
                 <div style={{ fontSize: '12px', color: 'red' }}>{checkError.EmailError}</div>
@@ -108,6 +109,7 @@ const onLogin= async()=>{
                     onChange={handleChange}
                     error={checkError.PasswordTrue}
                     id="password"
+                    placeholder='Password'
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={
                         <InputAdornment position="end">

@@ -21,7 +21,7 @@ const AuthRoute = lazy(() => import("./AuthRoute"));
 
 export const Router = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <Routes>
         <Route
           path="/"

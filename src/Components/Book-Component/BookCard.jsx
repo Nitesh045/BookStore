@@ -49,7 +49,6 @@ useEffect(()=>{
   }
   
 },[currentPage])
-console.log(bookIndex)
 
 
 

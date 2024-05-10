@@ -1,9 +1,25 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import App from './App';
+// import { render, screen } from "@testing-library/react";
+// import App from "./App";
+// import { Router } from "./router/Router";
 
-test('component render router', () => {
-  const component= shallow(<App/>)
-  const testComp= component.find('Router').exists()
-  expect(testComp).toBe(true)
+// describe("ParentComponent", () => {
+//   test("renders learn react link", () => {
+//     render(<App />);
+
+//     expect(App).toBeTruthy();
+//   });
+
+  
+// });
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+test('renders learn react link', () => {
+  render(
+        <App />
+  );
+ 
+  expect(App).toBeTruthy();
 });

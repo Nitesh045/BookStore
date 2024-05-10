@@ -22,7 +22,7 @@ import store from './Components/Redux/Store';
 function App() {
   return (
     <Provider store={store}>
-      <Router />
+      <Router  />
     </Provider>
   );
 }

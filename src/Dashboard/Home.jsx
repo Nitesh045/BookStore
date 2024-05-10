@@ -74,7 +74,7 @@ function Home({searchQuery}) {
   },[]);
 
   
-  const [bookIndex, setBookIndex] = useState(1);
+  
   const [counter,setCounter]= useState(0) 
 
   useEffect(()=>{
@@ -112,7 +112,7 @@ function Home({searchQuery}) {
           <Grid container sx={{gap:3,flexWrap:'wrap',justifyContent:'center'}}>
               {filteredNotes.map((item,index) => ( 
                
-              <Link to={`/about/${item._id}`} key={item._id}>
+              <Link to={`/about/${item._id}`} key={item._id} data-testid='ClickId'>
                  
                 <Grid item>
                   
